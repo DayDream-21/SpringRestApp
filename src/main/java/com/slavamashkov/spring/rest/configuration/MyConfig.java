@@ -23,7 +23,7 @@ public class MyConfig {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
-            dataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/my_db?useSSL=false&amp;serverTimezone=UTC");
+            dataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/my_db?useSSL=false&serverTimezone=UTC");
             dataSource.setUser("bestuser");
             dataSource.setPassword("bestuser");
 
