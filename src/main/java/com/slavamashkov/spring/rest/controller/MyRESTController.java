@@ -4,6 +4,7 @@ import com.slavamashkov.spring.rest.entity.Employee;
 import com.slavamashkov.spring.rest.exception_handling.EmployeeIncorrectData;
 import com.slavamashkov.spring.rest.exception_handling.NoSuchEmployeeException;
 import com.slavamashkov.spring.rest.service.EmployeeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class MyRESTController {
+    private final EmployeeService employeeService;
+
     @Autowired
-    private EmployeeService employeeService;
+    public MyRESTController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("/employees")
     public List<Employee> showAllEmployees() {
@@ -34,23 +39,5 @@ public class MyRESTController {
         }
 
         return employee;
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<EmployeeIncorrectData> handleException(
-            NoSuchEmployeeException exception) {
-        EmployeeIncorrectData data = new EmployeeIncorrectData();
-        data.setInfo(exception.getMessage());
-
-        return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<EmployeeIncorrectData> handleException(
-            Exception exception) {
-        EmployeeIncorrectData data = new EmployeeIncorrectData();
-        data.setInfo(exception.getMessage());
-
-        return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
     }
 }
